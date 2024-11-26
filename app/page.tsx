@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { fetchData } from "./actions";
 
 export default function DiceGame() {
   const [playerName, setPlayerName] = useState("");
@@ -16,14 +17,12 @@ export default function DiceGame() {
 
     setError(null);
     setIsRolling(true);
-    setAnimationClass("rolling"); // Trigger animation when rolling starts
-
-    // Simulate dice roll with a short delay
+    setAnimationClass("rolling");
     const roll = Math.floor(Math.random() * 6) + 1;
 
     setTimeout(() => {
       setResult(roll);
-      console.log(`Saving to DB: Player ${playerName} rolled ${roll}`);
+      fetchData(playerName, roll)
       setIsRolling(false);
       setAnimationClass(""); // Reset animation class after the roll
     }, 1000); // Simulate network delay
